@@ -6,9 +6,11 @@ class Productos {
 }
 
 function Carrito() {
-    const productos = [];
+  const productos = [];
   this.agregar = function (sel, cant) {
-    /*if(sel == 1){
+    /*
+    Primera alternativa de solucion antes del switch
+    if(sel == 1){
         productos.push({nombre: "Leche", precio: 1000, cantidad: cant})
         alert(`${cant} Leche(s) agregado(s) al Carrito`);
     } else if(sel == 2){
@@ -51,19 +53,33 @@ function Carrito() {
     const totalCarrito = productos.reduce((acc, producto) => {
       return acc + producto.precio * producto.cantidad;
     }, 0);
-    this.finalizar(totalCarrito);
-  };
-
-  this.finalizar = function (venta) {
-    alert("Total de la compra: $" + venta);
+    alert("Total de la compra: $" + totalCarrito);
     this.detalles();
   };
 
+  this.finalizar = function () {
+    let decision = prompt("Deseas seguir agregando productos? (s/n)");
+    if (decision == "n") {
+      producto.calcular();
+    }
+    return decision;
+  };
+
   this.detalles = function () {
-      /*productos.forEach(element => {
+    /*
+    Primera solucion para mostrar detalles pero salia en diferentes alerts
+    productos.forEach(element => {
         alert(`Tus productos seleccionados\nProducto: ${element.nombre}\nCantidad: ${element.cantidad}`)
     });*/
-    alert(productos.map(value => `Compraste:\nProducto: ${value.nombre}       Cantidad: ${value.cantidad}`).join('\n'));
+    alert(
+      productos
+        .map(
+          (value) =>
+            `Compraste:\nProducto: ${value.nombre}       Cantidad: ${value.cantidad}`
+        )
+        .join("\n")
+    );
+    alert("Gracias por tu compra!!")
   };
 }
 
@@ -78,10 +94,5 @@ do {
   );
   const cantidad = +prompt("Ingrese la cantidad de unidades:");
   producto.agregar(seleccion, cantidad);
-  var decision = prompt("Deseas seguir agregando productos? (s/n)");
-  if (decision == "n") {
-    producto.calcular();
-  } 
-  
+  var decision = producto.finalizar(); //no sé por qué cuando uso let o const no me funciona, solo var global
 } while (decision == "s" || decision == "S");
-
